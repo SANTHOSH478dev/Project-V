@@ -1,5 +1,5 @@
 import userModel from "../models/userModel.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs"; // Fixed import
 import jwt from "jsonwebtoken";
 
 const registerUser = async (req, res) => {
@@ -23,7 +23,7 @@ const registerUser = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    return res.json({ success: true, token, user: { name, name: user.name } });
+    return res.json({ success: true, token, user: { name: user.name } });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -71,4 +71,5 @@ const userCredits = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
 export { registerUser, loginUser, userCredits };
